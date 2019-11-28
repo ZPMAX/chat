@@ -7,6 +7,7 @@ import yzp.chat.dm.core.exception.NotFoundException;
 import yzp.chat.dm.repository.AccountRepository;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -37,5 +38,9 @@ public class AccountServer {
         AppBeanUtils.copyNotNullProperties(account,account1);
         accountRepository.save(account1);
         return account1;
+    }
+
+    public List<Account> findUserbyName(String name) {
+        return  accountRepository.findAccountsByNameLike(name);
     }
 }
