@@ -11,6 +11,7 @@ import yzp.chat.dm.Servlet.AddFriendRequestService;
 import yzp.chat.dm.core.exception.BadRequsetException;
 import yzp.chat.dm.core.exception.ForbiddenException;
 import yzp.chat.dm.core.security.AppUserDetails;
+import yzp.chat.dm.repository.FriendRelationalRepository;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
@@ -32,6 +33,8 @@ public class AddFriendRequestController {
     AddFriendRequestService addFriendRequestService;
     @Resource
     AccountServer accountServer;
+    @Resource
+    FriendRelationalRepository friendRelationalRepository;
 //    @GetMapping("/{uid}")
 //    List<AddFriendsRequest> index(@PathVariable Long uid, @AuthenticationPrincipal AppUserDetails appUserDetails){
 //        if (!uid.equals(appUserDetails.account.getId())) {
