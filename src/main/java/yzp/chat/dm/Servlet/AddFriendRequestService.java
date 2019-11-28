@@ -27,7 +27,9 @@ public class AddFriendRequestService {
     AddFriendRequestRepository addFriendRequestRepository;
 
     public List<AddFriendsRequest> getUndisposedList(Long uid) {
-        return null;
+        List<AddFriendsRequest> list = addFriendRequestRepository.findAddFriendsRequestByToaidEquals(uid);
+        return list
+
     }
 
     public void applyAdd(Long id, Long toUid, String verifInfo) throws BadRequsetException {

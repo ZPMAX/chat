@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import yzp.chat.dm.Model.Account;
 import yzp.chat.dm.Model.AddFriendsRequest;
 
+import java.util.List;
+
 /**
  * ClassName:
  * PackgeName:
@@ -12,5 +14,6 @@ import yzp.chat.dm.Model.AddFriendsRequest;
  * @author:多堕大手笔的萨克
  **/
 public interface AddFriendRequestRepository extends JpaRepository<AddFriendsRequest,Long> {
-    Account
+    List<AddFriendsRequest> findAddFriendsRequestByToaidEquals(Long toaid);
+
 }
