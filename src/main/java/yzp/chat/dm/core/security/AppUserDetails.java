@@ -10,11 +10,12 @@ import java.util.Collection;
 
 public class AppUserDetails implements UserDetails {
 
-    public Account  account;
+    public Account account;
 
     public AppUserDetails(Account account) {
         this.account = account;
     }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return new ArrayList<>();
