@@ -3,7 +3,6 @@ package yzp.chat.dm.Controller;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +11,6 @@ import yzp.chat.dm.Model.Account;
 import yzp.chat.dm.Model.Token;
 import yzp.chat.dm.Servlet.AuthService;
 import yzp.chat.dm.core.exception.NotFoundException;
-import yzp.chat.dm.core.security.AppUserDetails;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -46,11 +44,9 @@ public class AuthController {
            return loginV;
        }
        @PostMapping("/updatapwd")
-    public Account updatapwd(@AuthenticationPrincipal AppUserDetails appUserDetails,
-                             @Valid @RequestBody UpdatePwd updatePwd)
-               throws UnsupportedEncodingException, InvalidKeyException {
-           //Long a=Long.valueOf(updatePwd.getUid());
-           return authService.updatePWD(appUserDetails.account.getId(),updatePwd.getOldpassword(),updatePwd.getNewpassword());
+    public Account updatapwd(@Valid @RequestBody UpdatePwd updatePwd) throws UnsupportedEncodingException, InvalidKeyException, NoSuchAlgorithmException {
+           Long a=Long.valueOf(updatePwd.getUid());
+           return authService.updatePWD(a,updatePwd.getOldpassword(),updatePwd.getNewpassword());
        }
 }
 @Getter
@@ -64,6 +60,8 @@ class SigninPara {
 @Getter
 @Setter
 class UpdatePwd {
+    @NotBlank()
+    String uid;
     @NotBlank()
     String oldpassword;
     @NotBlank()
