@@ -11,5 +11,6 @@ import yzp.chat.dm.Model.FriendRelational;
  * @author:多堕大手笔的萨克
  **/
 public interface FriendRelationalRepository extends JpaRepository<FriendRelational,Long> {
+    FriendRelational findFriendRelationalsByAidEqualsAndAidtoEquals(Long aid,Long toaid);
 
 }
