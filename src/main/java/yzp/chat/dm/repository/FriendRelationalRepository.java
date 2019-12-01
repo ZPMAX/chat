@@ -1,7 +1,10 @@
 package yzp.chat.dm.repository;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import yzp.chat.dm.Model.FriendRelational;
+
+import java.util.List;
 
 /**
  * ClassName:
@@ -12,5 +15,5 @@ import yzp.chat.dm.Model.FriendRelational;
  **/
 public interface FriendRelationalRepository extends JpaRepository<FriendRelational,Long> {
     FriendRelational findFriendRelationalsByAidEqualsAndAidtoEquals(Long aid,Long toaid);
-
+     List<FriendRelational> findFriendRelationalsByAidEquals(Pageable pageable,Long aid);
 }

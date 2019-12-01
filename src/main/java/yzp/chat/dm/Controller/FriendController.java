@@ -1,14 +1,19 @@
 package yzp.chat.dm.Controller;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import yzp.chat.dm.Model.Account;
+import yzp.chat.dm.Servlet.AccountServer;
 import yzp.chat.dm.Servlet.FriendService;
 import yzp.chat.dm.core.security.AppUserDetails;
+import yzp.chat.dm.repository.AccountRepository;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * ClassName:
@@ -22,11 +27,27 @@ import javax.annotation.Resource;
 public class FriendController {
     @Resource
     FriendService friendService;
+    @Resource
+    AccountServer accountServer;
+    @Resource
+    AccountRepository accountRepository;
     @DeleteMapping("/{uid}")
     void delete(@AuthenticationPrincipal AppUserDetails appUserDetails,
                @PathVariable Long uid){
         Long crud = appUserDetails.account.getId();
         friendService.deleteRelation(crud,uid);
+    }
+    @GetMapping("/")
+    List<Account> index(@AuthenticationPrincipal AppUserDetails appUserDetails,
+                        @RequestParam(defaultValue = "0") Integer page,
+                        @RequestParam(defaultValue = "0") Integer size){
+        Sort sort=Sort.by(Sort.Direction.DESC,"id");
+        Pageable pageable = PageRequest.of(page,size,sort);
+        return friendService.findAll(pageable,appUserDetails.account.getId());
 
+    }
+    @GetMapping("/{uid}")
+    Account get(@PathVariable Long uid){
+        return friendService.findFriend(uid);
     }
 }

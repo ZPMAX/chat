@@ -8,8 +8,8 @@ import yzp.chat.dm.Model.Account;
 import yzp.chat.dm.Model.AddFriendsRequest;
 import yzp.chat.dm.Servlet.AccountServer;
 import yzp.chat.dm.Servlet.AddFriendRequestService;
-import yzp.chat.dm.core.exception.BadRequsetException;
-import yzp.chat.dm.core.exception.ForbiddenException;
+import yzp.chat.dm.core.exception.BadRequestException;
+
 import yzp.chat.dm.core.security.AppUserDetails;
 import yzp.chat.dm.repository.FriendRelationalRepository;
 
@@ -49,11 +49,11 @@ public class AddFriendRequestController {
     }
     @GetMapping("/find")
     List<Account> find(String name){
-        return  accountServer.findUserbyName("%"+name+"%");
+        return  accountServer.findUsersByName("%"+name+"%");
     }
     @PostMapping("/apply")
     void apply(@AuthenticationPrincipal AppUserDetails appUserDetails,
-               @Valid @RequestBody  ApplyPara applyPara) throws BadRequsetException {
+               @Valid @RequestBody  ApplyPara applyPara) throws BadRequestException {
         addFriendRequestService.applyAdd(appUserDetails.account.getId(),
                 applyPara.getToUid(),
                 applyPara.getVerifInfo());

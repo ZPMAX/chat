@@ -1,0 +1,58 @@
+[33mcommit f9034974c3f39d8d6e66265962b3f9dbceb312e9[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: ZPMAX <770451286@qq.com>
+Date:   Sat Nov 30 15:42:27 2019 +0800
+
+    删除好友
+
+[33mcommit 604ab147ef7461f9523646e7c2e3db3feb6a763e[m
+Merge: cea221b 70ca12c
+Author: ZPMAX <770451286@qq.com>
+Date:   Sat Nov 30 15:15:53 2019 +0800
+
+    Merge branch 'master' of https://github.com/ZPMAX/chat
+
+[33mcommit cea221bef14a290a64367986ccccf00493f1a21a[m
+Author: ZPMAX <770451286@qq.com>
+Date:   Thu Nov 28 23:26:01 2019 +0800
+
+    好友关系建立
+
+[33mcommit 70ca12c0cec6c740d6ed9acf05c7819abe720e51[m
+Merge: c906430 ac76de5
+Author: ZPMAX <770451286@qq.com>
+Date:   Thu Nov 28 21:36:18 2019 +0800
+
+    Merge branch 'master' of https://github.com/ZPMAX/chat
+    
+    # Conflicts:
+    #       src/main/java/yzp/chat/dm/Controller/AddFriendRequestController.java
+    #       src/main/java/yzp/chat/dm/Servlet/AddFriendRequestService.java
+    #       src/main/java/yzp/chat/dm/repository/AddFriendRequestRepository.java
+
+[33mcommit c906430acbcf8d0394c02a4c347b179c8a2c00a3[m
+Author: ZPMAX <770451286@qq.com>
+Date:   Thu Nov 28 19:16:17 2019 +0800
+
+    获取好友添加列表   列表
+
+[33mcommit ac76de5cd8e746006d0e2b206fba34b28e74e92b[m
+Author: ZPMAX <770451286@qq.com>
+Date:   Thu Nov 28 18:21:20 2019 +0800
+
+    Revert "master"
+    
+    This reverts commit b1f2c65a4dcf5b3dc25f4f1238325025e34acd0a.
+
+[33mcommit b1f2c65a4dcf5b3dc25f4f1238325025e34acd0a[m
+Author: ZPMAX <770451286@qq.com>
+Date:   Thu Nov 28 18:19:39 2019 +0800
+
+    master
+    
+    模糊查询+添加好友
+
+[33mcommit a45ced34856fd944e8aadd3ce99f4fefc83f33d5[m
+Author: ZPMAX <770451286@qq.com>
+Date:   Sun Nov 24 20:02:50 2019 +0800
+
+    无用户验证权限

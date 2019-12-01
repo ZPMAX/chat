@@ -7,6 +7,7 @@ import yzp.chat.dm.core.exception.NotFoundException;
 import yzp.chat.dm.repository.AccountRepository;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -38,4 +39,6 @@ public class AccountServer {
         accountRepository.save(account1);
         return account1;
     }
-}
+    public List<Account> findUsersByName(String name) {
+        return accountRepository.findAccountsByNameLike("%"+name+"%");
+    }}
