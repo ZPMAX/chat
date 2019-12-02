@@ -3,7 +3,7 @@ package yzp.chat.dm.Servlet;
 import org.springframework.stereotype.Service;
 import yzp.chat.dm.Model.AddFriendsRequest;
 import yzp.chat.dm.Model.FriendRelational;
-import yzp.chat.dm.core.exception.BadRequsetException;
+import yzp.chat.dm.core.exception.BadRequestException;
 import yzp.chat.dm.core.exception.ForbiddenException;
 import yzp.chat.dm.repository.AccountRepository;
 import yzp.chat.dm.repository.AddFriendRequestRepository;
@@ -38,12 +38,12 @@ public class AddFriendRequestService {
 
     }
 
-    public void applyAdd(Long id, Long toUid, String verifInfo) throws BadRequsetException {
+    public void applyAdd(Long id, Long toUid, String verifInfo) throws BadRequestException {
         if (Objects.equals(id,toUid)) {
-            throw new BadRequsetException();
+            throw new BadRequestException();
         }
         if (!accountRepository.existsById(id)) {
-            throw new BadRequsetException();
+            throw new BadRequestException();
         }
         AddFriendsRequest request =new AddFriendsRequest();
         request.setAid(id);
@@ -51,11 +51,11 @@ public class AddFriendRequestService {
         request.setVerifilnfo(verifInfo);
         addFriendRequestRepository.save(request);
     }
-    public void reply(Long id,Long requestid,Long opt) throws BadRequsetException {
+    public void reply(Long id,Long requestid,Long opt) throws BadRequestException {
         Optional<AddFriendsRequest> addFriendsRequestOptional= addFriendRequestRepository
                 .findById(requestid);
         if (addFriendsRequestOptional.isEmpty()) {
-            throw new BadRequsetException();
+            throw new BadRequestException();
         }
         AddFriendsRequest request =addFriendsRequestOptional.get();
         if (!request.getToaid().equals(id)) {
@@ -74,7 +74,7 @@ public class AddFriendRequestService {
         //		3
         switch (opt.intValue()) {
             case 0:
-                throw new BadRequsetException();
+                throw new BadRequestException();
             case 1:
                 makeFriendRelationship(request);
                 request.setOperation(opt.intValue());
@@ -85,7 +85,7 @@ public class AddFriendRequestService {
                 request.setOperation(opt.intValue());
                 break;
             default:
-                throw new BadRequsetException();
+                throw new BadRequestException();
         }
 
 
