@@ -53,6 +53,12 @@ public class AddFriendRequestController {
                 applyPara.getToUid(),
                 applyPara.getVerifInfo());
     }
+    // 获取 所有 未处理 申请添加好友数据 的数量
+    @GetMapping("/count")
+    Long count(@AuthenticationPrincipal AppUserDetails appUserDetails) {
+        // 判断是不是当前用户
+        return addFriendRequestService.getUndisposedCount(appUserDetails.account.getId());
+    }
 
 }
 @Data
