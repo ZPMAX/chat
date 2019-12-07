@@ -1,6 +1,9 @@
 package yzp.chat.dm.Servlet;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import yzp.chat.dm.Model.Account;
+import yzp.chat.dm.Model.AddFriendRequestFullAccount;
 import yzp.chat.dm.Model.AddFriendsRequest;
 import yzp.chat.dm.Model.FriendRelational;
 import yzp.chat.dm.core.exception.BadRequestException;
@@ -10,9 +13,7 @@ import yzp.chat.dm.repository.AddFriendRequestRepository;
 import yzp.chat.dm.repository.FriendRelationalRepository;
 
 import javax.annotation.Resource;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * ClassName:
@@ -32,10 +33,30 @@ public class AddFriendRequestService {
     @Resource
     FriendRelationalRepository friendRelationalRepository;
 
-    public List<AddFriendsRequest> getUndisposedList(Long uid) {
+    public List<AddFriendRequestFullAccount> getUndisposedList(Long uid) {
         List<AddFriendsRequest> list = addFriendRequestRepository.findAddFriendsRequestByToaidEquals(uid);
-        return list;
 
+        List<AddFriendRequestFullAccount> listRes = new ArrayList<>(list.size());
+        List<Long> listAid = new ArrayList<>(list.size());
+
+        for (AddFriendsRequest  request: list) {
+            AddFriendRequestFullAccount fullAccount = new AddFriendRequestFullAccount();
+            BeanUtils.copyProperties(request,fullAccount);
+            listRes.add(fullAccount);
+            listAid.add(request.getAid());
+        }
+
+        // 填充 查询  account
+        List<Account> allById = accountRepository.findAllById(listAid);
+        LinkedHashMap<Long,Account> linkedHashMap = new LinkedHashMap<>();
+        for (Account account : allById) {
+            linkedHashMap.put(account.getId(),account);
+        }
+
+        for (AddFriendRequestFullAccount re : listRes) {
+            re.setAccount(linkedHashMap.get(re.getAid()));
+        }
+        return listRes;
     }
 
     public void applyAdd(Long id, Long toUid, String verifInfo) throws BadRequestException {

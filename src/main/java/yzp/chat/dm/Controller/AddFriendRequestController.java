@@ -5,6 +5,7 @@ import lombok.NonNull;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import yzp.chat.dm.Model.Account;
+import yzp.chat.dm.Model.AddFriendRequestFullAccount;
 import yzp.chat.dm.Model.AddFriendsRequest;
 import yzp.chat.dm.Servlet.AccountServer;
 import yzp.chat.dm.Servlet.AddFriendRequestService;
@@ -35,21 +36,15 @@ public class AddFriendRequestController {
     AccountServer accountServer;
     @Resource
     FriendRelationalRepository friendRelationalRepository;
-//    @GetMapping("/{uid}")
-//    List<AddFriendsRequest> index(@PathVariable Long uid, @AuthenticationPrincipal AppUserDetails appUserDetails){
-//        if (!uid.equals(appUserDetails.account.getId())) {
-//            throw new ForbiddenException();
-//        }
-//        return  addFriendRequestService.getUndisposedList(uid);
-//    }
+
     @GetMapping("/")
-    List<AddFriendsRequest> index(@PathVariable Long uid,@AuthenticationPrincipal AppUserDetails appUserDetails){
+    List<AddFriendsRequest> index(@AuthenticationPrincipal AppUserDetails appUserDetails){
         return addFriendRequestService.getUndisposedList(appUserDetails.account.getId());
 
     }
     @GetMapping("/find")
     List<Account> find(String name){
-        return  accountServer.findUsersByName("%"+name+"%");
+        return accountServer.findUsersByName(name);
     }
     @PostMapping("/apply")
     void apply(@AuthenticationPrincipal AppUserDetails appUserDetails,
@@ -57,6 +52,10 @@ public class AddFriendRequestController {
         addFriendRequestService.applyAdd(appUserDetails.account.getId(),
                 applyPara.getToUid(),
                 applyPara.getVerifInfo());
+    }
+    List<AddFriendRequestFullAccount> index(@AuthenticationPrincipal AppUserDetails appUserDetails) {
+        // 判断是不是当前用户
+        return addFriendRequestService.getUndisposedList(appUserDetails.account.getId());
     }
 }
 @Data

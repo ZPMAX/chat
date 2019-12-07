@@ -52,6 +52,7 @@ public class AuthService {
         //String pwd1=encryption(pwd);
         String pwd1= DigestUtils.md5DigestAsHex(pwd.getBytes());
         account =new Account();
+        account.setName("phone+"+phone);
         account.setPass(pwd1);
         account.setPhone(phone);
         account=accountRepository.save(account);
