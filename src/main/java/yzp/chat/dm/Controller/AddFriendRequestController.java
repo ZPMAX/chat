@@ -38,9 +38,9 @@ public class AddFriendRequestController {
     FriendRelationalRepository friendRelationalRepository;
 
     @GetMapping("/")
-    List<AddFriendsRequest> index(@AuthenticationPrincipal AppUserDetails appUserDetails){
+    List<AddFriendRequestFullAccount> index(@AuthenticationPrincipal AppUserDetails appUserDetails) {
+        // 判断是不是当前用户
         return addFriendRequestService.getUndisposedList(appUserDetails.account.getId());
-
     }
     @GetMapping("/find")
     List<Account> find(String name){
@@ -53,10 +53,7 @@ public class AddFriendRequestController {
                 applyPara.getToUid(),
                 applyPara.getVerifInfo());
     }
-    List<AddFriendRequestFullAccount> index(@AuthenticationPrincipal AppUserDetails appUserDetails) {
-        // 判断是不是当前用户
-        return addFriendRequestService.getUndisposedList(appUserDetails.account.getId());
-    }
+
 }
 @Data
 class ApplyPara{
