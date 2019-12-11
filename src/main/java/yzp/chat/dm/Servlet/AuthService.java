@@ -58,26 +58,22 @@ public class AuthService {
         account=accountRepository.save(account);
         return account;
     }
-    public Token login(String phone,String password) throws UnsupportedEncodingException, InvalidKeyException {
-        Account account=new Account();
-        account =accountRepository.findAccountByPhone(phone);
-        if(account!=null){
-            //HMACMD5加密
-             //password=encryption(password);
-             password=DigestUtils.md5DigestAsHex(password.getBytes());
-            if(account.getPass().equals(password)){
-                Token token =new Token();
-                token.setAid(account.getId());
-                String tokenVa= UUID.randomUUID().toString();
-                token.setToken(tokenVa);
-                token=tokenRepository.save(token);
-                return token;
-            }else {
-                return null;
-            }
-        }else {
-            throw new NotFoundException();
+    public Token login(String phone,String password) {
+        Account account = accountRepository.findAccountByPhone(phone);
+        String md5Password = DigestUtils.md5DigestAsHex(password.getBytes());
+        if (!account.getPass().equals(md5Password)) {
+            return null;
         }
+
+        Token token = new Token();
+        token.setUserid(account.getId());
+        String tokenVa = UUID.randomUUID().toString();
+        token.setToken(tokenVa);
+
+        tokenRepository.save(token);
+
+        return token;
+
     }
     public Account updatePWD(Long uid,String oldpassword, String newpassword) throws UnsupportedEncodingException, InvalidKeyException {
         Optional<Account> byId = accountRepository.findById(uid);

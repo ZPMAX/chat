@@ -34,7 +34,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 任何  OPTIONS 放行
                 .antMatchers(HttpMethod.POST, "/auth/signin").permitAll()
                 .antMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                .antMatchers(HttpMethod.POST, "/auth/updatapwd").permitAll()
+
                 .antMatchers("/file/*").permitAll()
                 // 注册放行
                 .anyRequest().authenticated();

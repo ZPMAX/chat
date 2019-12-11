@@ -20,6 +20,6 @@ public class Token {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long aid;
+    private Long userid;
     private String token;
 }

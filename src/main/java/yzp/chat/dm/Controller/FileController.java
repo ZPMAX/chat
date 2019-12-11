@@ -26,7 +26,7 @@ public class FileController {
     Object upload(@RequestParam("file") MultipartFile file){
         String id=appStorageService.store(file);
         Map<String,String> resp =new HashMap<>();
-        resp.put("filed",id);
+        resp.put("fileid",id);
         return  resp;
     }
     @GetMapping("/{fid}")

@@ -59,7 +59,7 @@ public class TokenAuthenticationFilter extends BasicAuthenticationFilter {
             String tokenValue = token.replace("Bearer ", "").trim();
             Token token1 = new Token();
             token1 = tokenService.find(tokenValue);
-            Long userid = token1.getAid();
+            Long userid = token1.getUserid();
 
             UserDetails userDetails = userDetailsService.loadUserByUsername(userid.toString());
             return new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());

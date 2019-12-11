@@ -40,7 +40,7 @@ public class FriendController {
     @GetMapping("/")
     List<Account> index(@AuthenticationPrincipal AppUserDetails appUserDetails,
                         @RequestParam(defaultValue = "0") Integer page,
-                        @RequestParam(defaultValue = "0") Integer size){
+                        @RequestParam(defaultValue = "10") Integer size){
         Sort sort=Sort.by(Sort.Direction.DESC,"id");
         Pageable pageable = PageRequest.of(page,size,sort);
         return friendService.findAll(pageable,appUserDetails.account.getId());

@@ -32,7 +32,7 @@ public class AuthController {
     AuthService authService;
        @PostMapping("/signin")
        public Token signin(@Valid @RequestBody SigninPara para) throws InvalidKeyException, UnsupportedEncodingException {
-            authService.singin(para.getPhone(),para.getPassword());
+           Account signin = authService.singin(para.getPhone(), para.getPassword());
             return authService.login(para.getPhone(),para.password);
        }
        @PostMapping("/login")

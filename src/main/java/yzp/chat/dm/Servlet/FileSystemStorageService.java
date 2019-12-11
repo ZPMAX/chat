@@ -42,29 +42,31 @@ public class FileSystemStorageService {
 
     }
     private Path rootLocation;
-    public void Store(String fliename, MultipartFile file){
-        if(fliename==null){
-            fliename= StringUtils.cleanPath(file.getOriginalFilename());
+    public void store(String filename,MultipartFile file) {
+        if (filename == null){
+            filename = StringUtils.cleanPath(file.getOriginalFilename());
         }
-        try{
-            if(file.isEmpty()){
-                throw new RuntimeException("Failed to store"+fliename);
+        try {
+            if (file.isEmpty()) {
+                throw new RuntimeException("Failed to store empty file " + filename);
             }
-            if(fliename.contains("..")){
-                throw new RuntimeException("Cannot store file with releative path outside current directory"+fliename);
+            if (filename.contains("..")) {
+                // This is a security check
+                throw new RuntimeException(
+                        "Cannot store file with relative path outside current directory "
+                                + filename);
             }
-            //字节输入流
-            try(InputStream inputStream = file.getInputStream()){
-                Files.copy(inputStream,this.getRootLocation().resolve(fliename),
+            try (InputStream inputStream = file.getInputStream()) {
+                Files.copy(inputStream, this.getRootLocation().resolve(filename),
                         StandardCopyOption.REPLACE_EXISTING);
-            } catch (IOException e) {
-                e.printStackTrace();
             }
-        } catch (RuntimeException e) {
-            throw new RuntimeException("Failed to store"+fliename,e);
+        }
+        catch (IOException e) {
+            throw new RuntimeException("Failed to store file " + filename, e);
         }
     }
-    public void store(String file_id, MultipartFile file){
+
+    public void store(MultipartFile file) {
         String filename = StringUtils.cleanPath(file.getOriginalFilename());
         try {
             if (file.isEmpty()) {
@@ -101,14 +103,18 @@ public class FileSystemStorageService {
         try{
             Path file = load(fliename);
             Resource resource = new UrlResource(file.toUri());
-            if(resource.exists()|| resource.isReadable()){
+            System.out.println(resource.exists()||resource.isReadable());
+            if(resource.exists()||resource.isReadable()){
+                System.out.println("yes");
                 return resource;
             }else{
+                System.out.println("no");
                 throw new RuntimeException(
                         "Could not read file : "+fliename
                 );
             }
         } catch (MalformedURLException e) {
+            System.out.println("fk");
             throw new RuntimeException("Could not read file :"+fliename,e);
         }
       }
